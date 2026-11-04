@@ -1,0 +1,289 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-surface-light text-brandText-primary antialiased selection:bg-forest-100 selection:text-forest-900;
+  }
+}
+
+/* Leaflet container height fix */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  border-radius: 0.75rem;
+  z-index: 10;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Admin Search & Filter Inputs - High Contrast Dark Typed Text */
+select, option, input, textarea {
+  color-scheme: light !important;
+}
+
+.admin-search-input {
+  color: #020617 !important;
+  background-color: #ffffff !important;
+  caret-color: #020617 !important;
+  border-color: #cbd5e1 !important;
+  font-weight: 700 !important;
+}
+
+.admin-search-input::placeholder {
+  color: #334155 !important;
+  opacity: 1 !important;
+}
+
+.admin-search-input:focus {
+  color: #020617 !important;
+  background-color: #ffffff !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px #059669 !important;
+}
+
+/* Admin Select Inputs - High Contrast Dark Text */
+.admin-select-input {
+  color: #020617 !important;
+  background-color: #ffffff !important;
+  font-weight: 800 !important;
+  border-color: #cbd5e1 !important;
+}
+
+.admin-select-input option {
+  color: #020617 !important;
+  background-color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+/* ==========================================================================
+   FoodLink Modern UI/UX Interactive Styling & Google-Style Scroll Animations
+   ========================================================================== */
+
+/* Shimmer keyframe for smooth skeleton loading */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s infinite ease-in-out;
+}
+
+/* Google-style Scroll Reveal animations */
+.reveal-fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-fade-up.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-fade-in {
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
+}
+
+.reveal-fade-in.is-revealed {
+  opacity: 1;
+}
+
+.reveal-scale-up {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-scale-up.is-revealed {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.reveal-fade-left {
+  opacity: 0;
+  transform: translateX(-24px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-fade-left.is-revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-fade-right {
+  opacity: 0;
+  transform: translateX(24px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-fade-right.is-revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Stagger delay classes for card grids */
+.stagger-1 { transition-delay: 60ms; }
+.stagger-2 { transition-delay: 120ms; }
+.stagger-3 { transition-delay: 180ms; }
+.stagger-4 { transition-delay: 240ms; }
+.stagger-5 { transition-delay: 300ms; }
+.stagger-6 { transition-delay: 360ms; }
+
+/* Global Device Portability & Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body, #root {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* Micro-interactions: Cards */
+.card-interactive {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.28s ease;
+}
+
+.card-interactive:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px -8px rgba(15, 23, 42, 0.08), 0 4px 12px -2px rgba(15, 23, 42, 0.04);
+}
+
+.card-interactive:active {
+  transform: translateY(-1px) scale(0.995);
+}
+
+/* Micro-interactions: Buttons & Clicks */
+.btn-press {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  user-select: none;
+}
+
+.btn-press:active {
+  transform: scale(0.96);
+}
+
+/* Smooth Image Crossfade Helper */
+.crossfade-img {
+  transition: opacity 0.8s ease-in-out;
+}
+
+/* Floating widgets subtle bounce/glow */
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.float-gentle {
+  animation: floatGentle 4s ease-in-out infinite;
+}
+
+@keyframes floatDelayed {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-7px);
+  }
+}
+
+.float-delayed {
+  animation: floatDelayed 5.5s ease-in-out infinite 1.2s;
+}
+
+/* Horizontal Activity Ticker Marquee */
+@keyframes tickerScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-track {
+  display: flex;
+  width: max-content;
+  animation: tickerScroll 35s linear infinite;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
+
+/* Google-style Dynamic Route Page Enter Animation */
+@keyframes pageEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter-animation {
+  animation: pageEnter 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Accessible Reduced Motion Compliance */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-fade-up,
+  .reveal-fade-in,
+  .reveal-scale-up {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .ticker-track {
+    animation: none !important;
+  }
+  .float-gentle {
+    animation: none !important;
+  }
+}
+

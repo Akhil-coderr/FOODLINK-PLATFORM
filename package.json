@@ -1,0 +1,25 @@
+{
+  "name": "foodlink",
+  "version": "1.0.0",
+  "description": "FoodLink – Food Donation & Redistribution Management System",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "predev": "node scripts/free-ports.js",
+    "free-ports": "node scripts/free-ports.js",
+    "dev": "concurrently \"npm run dev --workspace=server\" \"npm run dev --workspace=client\"",
+    "dev:server": "npm run dev --workspace=server",
+    "dev:client": "npm run dev --workspace=client",
+    "build": "npm run build --workspace=client",
+    "start": "node server/server.js",
+    "seed": "npm run seed --workspace=server",
+    "test": "npm run test --workspace=server"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "concurrently": "^9.1.2"
+  }
+}
