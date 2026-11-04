@@ -97,7 +97,7 @@ export default function RegisterPage() {
 
         <div>
           <a
-            href={`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/google`}
+            href={`${import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api')}/auth/google`}
             className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs shadow-xs transition"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24">

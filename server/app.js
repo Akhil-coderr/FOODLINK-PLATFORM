@@ -25,6 +25,7 @@ const app = express();
 // Security and utility middleware
 app.use(
   helmet({
+    contentSecurityPolicy: false,
     crossOriginResourcePolicy: { policy: 'cross-origin' },
   })
 );
@@ -81,6 +82,37 @@ app.get('/api/health', (req, res) => {
     system: 'FoodLink API',
     timestamp: new Date().toISOString(),
     uptimeSeconds: Math.floor(process.uptime()),
+  });
+});
+
+// 404 handler for unhandled API routes (prevents /api/* from falling through to frontend index.html)
+app.all('/api/*', (req, res) => {
+  res.status(404).json({
+    success: false,
+    message: `API endpoint not found: ${req.method} ${req.originalUrl}`,
+  });
+});
+
+// Production Frontend Configuration
+const clientDistPath = path.resolve(__dirname, '../client/dist');
+const indexPath = path.join(clientDistPath, 'index.html');
+
+// 1. Serve static frontend assets from client/dist (JS, CSS, images, icons, manifest)
+app.use(express.static(clientDistPath));
+
+// 2. SPA Fallback: Serve client/dist/index.html for all non-API GET requests
+// Supports direct browser navigation and page refresh across all React routes (e.g. /login, /about, /donor/dashboard, /ngo/dashboard, /volunteer/dashboard, /admin/dashboard)
+app.get('*', (req, res, next) => {
+  if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
+    return next();
+  }
+
+  res.sendFile(indexPath, (err) => {
+    if (err) {
+      if (!res.headersSent) {
+        res.status(err.status || 500).send('Frontend build not found. Please build the client using "npm run build".');
+      }
+    }
   });
 });
 
