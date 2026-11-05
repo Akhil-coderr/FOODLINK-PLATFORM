@@ -35,15 +35,21 @@ const getOAuthUrls = (req) => {
     const proto =
       req.headers["x-forwarded-proto"] || (req.secure ? "https" : "https");
     const base = `${proto}://${host}`;
-    callbackUrl = `${base}/api/auth/google/callback`;
-    frontendUrl = base;
+    if (process.env.GOOGLE_CALLBACK_URL && !process.env.GOOGLE_CALLBACK_URL.includes("localhost")) {
+      callbackUrl = process.env.GOOGLE_CALLBACK_URL;
+    } else {
+      callbackUrl = `${base}/api/auth/google/callback`;
+    }
+    frontendUrl =
+      process.env.FRONTEND_URL && !process.env.FRONTEND_URL.includes("localhost")
+        ? process.env.FRONTEND_URL
+        : base;
   } else {
     // Local development
     callbackUrl =
       process.env.GOOGLE_CALLBACK_URL ||
       `http://${host || "localhost:5000"}/api/auth/google/callback`;
-    frontendUrl =
-      process.env.FRONTEND_URL || "https://foodlink-platform.onrender.com";
+    frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
   }
 
   return { callbackUrl, frontendUrl };

@@ -28,6 +28,7 @@ router.post('/reset-password', authLimiter, authController.resetPassword);
 // OAuth Endpoints (Google OAuth)
 router.get('/google', authController.googleAuth);
 router.get('/google/callback', authController.googleCallback);
+router.get('/callback', authController.googleCallback);
 router.post('/oauth/onboard', authLimiter, authController.oauthOnboard);
 
 module.exports = router;

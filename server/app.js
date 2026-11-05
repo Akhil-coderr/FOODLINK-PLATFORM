@@ -5,6 +5,7 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const path = require("path");
 const errorHandler = require("./middleware/errorHandler");
+const authController = require("./controllers/authController");
 
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
@@ -74,6 +75,15 @@ app.use("/api/impact", impactRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/rewards", rewardRoutes);
+
+// OAuth direct callback aliases (supports Google Console configs with or without /api prefix)
+app.get("/auth/google/callback", authController.googleCallback);
+app.get("/auth/callback", (req, res, next) => {
+  if (req.query.code && req.query.state) {
+    return authController.googleCallback(req, res, next);
+  }
+  next();
+});
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {

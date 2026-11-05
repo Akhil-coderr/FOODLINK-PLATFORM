@@ -133,8 +133,7 @@ JWT_REFRESH_SECRET=foodlink_refresh_secret_super_secure_key_2026
 # Google OAuth 2.0 Credentials (Optional - app remains functional without them)
 GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=your-google-client-secret
-GOOGLE_CALLBACK_URL=https://foodlink-platform.onrender.com
-/api/auth/google/callback
+GOOGLE_CALLBACK_URL=https://foodlink-platform.onrender.com/api/auth/google/callback
 
 # Root Administrators
 ADMIN_EMAILS=admin@foodlink.org
@@ -148,10 +147,8 @@ CLOUDINARY_API_SECRET=
 #### Frontend Configuration (`client/.env`)
 
 ```env
-VITE_API_URL=https://foodlink-platform.onrender.com
-/api
+VITE_API_URL=https://foodlink-platform.onrender.com/api
 VITE_SOCKET_URL=https://foodlink-platform.onrender.com
-
 ```
 
 ### 3. Database Seeding
