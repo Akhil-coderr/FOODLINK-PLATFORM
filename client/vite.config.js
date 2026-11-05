@@ -13,18 +13,15 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'https://foodlink-platform.onrender.com
-',
+        target: 'https://foodlink-platform.onrender.com',
         changeOrigin: true,
       },
       '/uploads': {
-        target: 'https://foodlink-platform.onrender.com
-',
+        target: 'https://foodlink-platform.onrender.com',
         changeOrigin: true,
       },
       '/socket.io': {
-        target: 'https://foodlink-platform.onrender.com
-',
+        target: 'https://foodlink-platform.onrender.com',
         ws: true,
       },
     },
