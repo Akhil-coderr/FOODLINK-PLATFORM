@@ -1,12 +1,12 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
 /**
  * Configure Nodemailer Transporter using environment variables
  */
 const getTransporter = () => {
-  const host = process.env.SMTP_HOST || 'smtp.gmail.com';
+  const host = process.env.SMTP_HOST || "smtp.gmail.com";
   const port = parseInt(process.env.SMTP_PORT, 10) || 587;
-  const secure = process.env.SMTP_SECURE === 'true' || port === 465;
+  const secure = process.env.SMTP_SECURE === "true" || port === 465;
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASSWORD || process.env.SMTP_PASS;
 
@@ -23,7 +23,7 @@ const getTransporter = () => {
       pass,
     },
     tls: {
-      rejectUnauthorized: process.env.NODE_ENV === 'production',
+      rejectUnauthorized: process.env.NODE_ENV === "production",
     },
   });
 };
@@ -36,9 +36,13 @@ const getTransporter = () => {
  * @returns {Promise<Object>}
  */
 const sendPasswordResetEmail = async (user, rawToken) => {
-  const clientUrl = process.env.CLIENT_URL || process.env.FRONTEND_URL || 'http://localhost:5173';
+  const clientUrl =
+    process.env.CLIENT_URL ||
+    process.env.FRONTEND_URL ||
+    "https://foodlink-platform.onrender.com";
   const resetUrl = `${clientUrl}/reset-password/${rawToken}`;
-  const senderEmail = process.env.EMAIL_FROM || '"FoodLink Security" <noreply@foodlink.org>';
+  const senderEmail =
+    process.env.EMAIL_FROM || '"FoodLink Security" <noreply@foodlink.org>';
 
   const htmlContent = `
     <!DOCTYPE html>
@@ -71,7 +75,7 @@ const sendPasswordResetEmail = async (user, rawToken) => {
         </div>
         <div class="content">
           <span class="badge">Password Security</span>
-          <div class="greeting">Hello ${user.name || 'FoodLink Member'},</div>
+          <div class="greeting">Hello ${user.name || "FoodLink Member"},</div>
           <p>We received a request to reset your password for your <strong>FoodLink</strong> account associated with <strong>${user.email}</strong>.</p>
           <p>Click the button below to choose a new password. This link is single-use and will expire in <strong>15 minutes</strong>.</p>
           
@@ -101,7 +105,7 @@ const sendPasswordResetEmail = async (user, rawToken) => {
   const textContent = `
 FoodLink – Password Reset Request
 
-Hello ${user.name || 'FoodLink Member'},
+Hello ${user.name || "FoodLink Member"},
 
 We received a request to reset the password for your FoodLink account (${user.email}).
 
@@ -127,7 +131,7 @@ If you did not make this request, please ignore this email.
   const mailOptions = {
     from: senderEmail,
     to: user.email,
-    subject: 'FoodLink – Password Reset Request',
+    subject: "FoodLink – Password Reset Request",
     text: textContent,
     html: htmlContent,
   };

@@ -1,23 +1,28 @@
-const { Server } = require('socket.io');
-const { verifyAccessToken } = require('../utils/token');
-const Notification = require('../models/Notification');
+const { Server } = require("socket.io");
+const { verifyAccessToken } = require("../utils/token");
+const Notification = require("../models/Notification");
 
 let ioInstance = null;
 
 const initSocket = (server, corsOrigin) => {
   const io = new Server(server, {
     cors: {
-      origin: corsOrigin || ['http://localhost:5173', 'http://127.0.0.1:5173'],
-      methods: ['GET', 'POST'],
+      origin: corsOrigin || [
+        "https://foodlink-platform.onrender.com",
+        "http://127.0.0.1:5173",
+      ],
+      methods: ["GET", "POST"],
       credentials: true,
     },
   });
 
   // Socket Authentication Middleware
   io.use((socket, next) => {
-    const token = socket.handshake.auth?.token || socket.handshake.headers?.authorization?.split(' ')[1];
+    const token =
+      socket.handshake.auth?.token ||
+      socket.handshake.headers?.authorization?.split(" ")[1];
     if (!token) {
-      return next(new Error('Authentication token missing'));
+      return next(new Error("Authentication token missing"));
     }
 
     try {
@@ -25,18 +30,18 @@ const initSocket = (server, corsOrigin) => {
       socket.user = decoded;
       next();
     } catch (err) {
-      next(new Error('Invalid or expired socket token'));
+      next(new Error("Invalid or expired socket token"));
     }
   });
 
-  io.on('connection', (socket) => {
+  io.on("connection", (socket) => {
     const { id: userId, role } = socket.user;
 
     // Join personal user room and role-based room
     socket.join(`user:${userId}`);
     socket.join(`role:${role}`);
 
-    socket.on('disconnect', () => {
+    socket.on("disconnect", () => {
       // socket disconnected
     });
   });
@@ -50,7 +55,14 @@ const getIO = () => {
 };
 
 // Helper to broadcast notification to a specific user and persist in database
-const notifyUser = async ({ recipientId, title, message, type = 'info', relatedEntityId = null, entityType = null }) => {
+const notifyUser = async ({
+  recipientId,
+  title,
+  message,
+  type = "info",
+  relatedEntityId = null,
+  entityType = null,
+}) => {
   try {
     const notif = await Notification.create({
       recipientId,
@@ -62,11 +74,11 @@ const notifyUser = async ({ recipientId, title, message, type = 'info', relatedE
     });
 
     if (ioInstance) {
-      ioInstance.to(`user:${recipientId}`).emit('notification:new', notif);
+      ioInstance.to(`user:${recipientId}`).emit("notification:new", notif);
     }
     return notif;
   } catch (err) {
-    console.error('Error creating notification:', err.message);
+    console.error("Error creating notification:", err.message);
   }
 };
 

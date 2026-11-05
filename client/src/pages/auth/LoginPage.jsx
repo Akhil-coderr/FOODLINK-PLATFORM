@@ -86,7 +86,13 @@ export default function LoginPage() {
   };
 
   const handleGoogleLogin = () => {
-    const apiBase = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://foodlink-platform.onrender.com/api' : 'http://localhost:5000/api');
+    const apiBase =
+      import.meta.env.VITE_API_URL ||
+      (typeof window !== 'undefined' && window.location.origin.includes('onrender.com')
+        ? `${window.location.origin}/api`
+        : import.meta.env.PROD
+          ? 'https://foodlink-platform.onrender.com/api'
+          : 'http://localhost:5000/api');
     window.location.href = `${apiBase.replace(/\/+$/, '')}/auth/google`;
   };
 
