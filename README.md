@@ -36,6 +36,7 @@
 ## 🛠️ Technology Stack
 
 ### Frontend
+
 - **Framework**: React 18 with Vite
 - **Styling**: Tailwind CSS, PostCSS, Lucide React icons
 - **State & Routing**: React Context API, React Router DOM v6
@@ -46,6 +47,7 @@
 - **Feedback**: React Hot Toast
 
 ### Backend
+
 - **Runtime**: Node.js & Express.js (MVC architecture)
 - **Database**: MongoDB with Mongoose ODM
 - **Authentication**: JWT, HTTP-Only cookies, bcryptjs, Google OAuth 2.0 / OIDC
@@ -75,7 +77,7 @@ foodlink/
 │   │   │   ├── donor/          # Dashboard, Add Donation, My Donations, Requests, Analytics
 │   │   │   ├── ngo/            # Dashboard, Browse, Smart Match, Claims, Deliveries, Impact
 │   │   │   ├── volunteer/      # Dashboard, Tasks, Active Routes, Scan QR, Achievements, Rewards
-│   │   │   └── admin/          # AdminLogin, Dashboard, Users, Donors, NGOs, NGODetails, 
+│   │   │   └── admin/          # AdminLogin, Dashboard, Users, Donors, NGOs, NGODetails,
 │   │   │                       # Volunteers, Donations, Requests, Assignments, Safety,
 │   │   │                       # Notifications, Messages, Analytics, Reports, Settings, AuditLogs,
 │   │   │                       # Reward Catalog, Reward Redemptions
@@ -111,12 +113,14 @@ foodlink/
 ## 🚀 Quickstart Guide
 
 ### 1. Prerequisites
+
 - **Node.js** (v18.0.0 or higher)
 - **MongoDB** (Local instance on `mongodb://localhost:27017` or MongoDB Atlas URI)
 
 ### 2. Environment Configuration
 
 #### Backend Configuration (`server/.env`)
+
 ```env
 PORT=5000
 NODE_ENV=development
@@ -129,7 +133,8 @@ JWT_REFRESH_SECRET=foodlink_refresh_secret_super_secure_key_2026
 # Google OAuth 2.0 Credentials (Optional - app remains functional without them)
 GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
 GOOGLE_CLIENT_SECRET=your-google-client-secret
-GOOGLE_CALLBACK_URL=http://localhost:5000/api/auth/google/callback
+GOOGLE_CALLBACK_URL=https://foodlink-platform.onrender.com
+/api/auth/google/callback
 
 # Root Administrators
 ADMIN_EMAILS=admin@foodlink.org
@@ -141,39 +146,48 @@ CLOUDINARY_API_SECRET=
 ```
 
 #### Frontend Configuration (`client/.env`)
+
 ```env
-VITE_API_URL=http://localhost:5000/api
-VITE_SOCKET_URL=http://localhost:5000
+VITE_API_URL=https://foodlink-platform.onrender.com
+/api
+VITE_SOCKET_URL=https://foodlink-platform.onrender.com
+
 ```
 
 ### 3. Database Seeding
+
 Populate the database with initial administrators, demo donors, verified NGOs, volunteers, and sample donations:
+
 ```bash
 npm run seed
 ```
 
 ### 4. Running the Application
+
 From the root directory, start both the Express backend and Vite frontend simultaneously:
+
 ```bash
 npm run dev
 ```
 
 - **Frontend Application**: `http://localhost:5173`
 - **Administrator Login**: `http://localhost:5173/admin/login`
-- **Backend API**: `http://localhost:5000`
-- **API Health Check**: `http://localhost:5000/api/health`
+- **Backend API**: `https://foodlink-platform.onrender.com
+`
+- **API Health Check**: `https://foodlink-platform.onrender.com
+/api/health`
 
 ### 5. Database Troubleshooting
 
 If the server stops with `MONGODB CONNECTION ERROR`, the improved error output now distinguishes the real cause:
 
-| Error | Meaning | Fix |
-| --- | --- | --- |
-| `bad auth : authentication failed` | Atlas rejected the username/password. This is **not** an IP whitelist issue. | Reset the password of the database user in **Atlas → Database Access**, then update `MONGODB_URI`. Use the database user password, not your Atlas login password. |
-| `IP ... is not whitelisted` / `network access` | Your public IP is not allowed. | Add it in **Atlas → Network Access** (use `0.0.0.0/0` only for local development). |
-| `ENOTFOUND` / `querySrv` | The cluster hostname cannot be resolved. | Check the hostname in `MONGODB_URI` and your internet connection. |
-| `ECONNREFUSED` | Nothing is listening on that address. | Start local MongoDB, or check that the Atlas cluster is not paused. |
-| `socket disconnected before secure TLS connection was established` / `ECONNRESET` | A firewall, antivirus, VPN, or IPv6/NAT64 route is interrupting TLS. | The server now forces IPv4, recycles idle sockets, and retries automatically. If it persists, disable TLS-inspecting antivirus/VPN or switch networks. |
+| Error                                                                             | Meaning                                                                      | Fix                                                                                                                                                               |
+| --------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `bad auth : authentication failed`                                                | Atlas rejected the username/password. This is **not** an IP whitelist issue. | Reset the password of the database user in **Atlas → Database Access**, then update `MONGODB_URI`. Use the database user password, not your Atlas login password. |
+| `IP ... is not whitelisted` / `network access`                                    | Your public IP is not allowed.                                               | Add it in **Atlas → Network Access** (use `0.0.0.0/0` only for local development).                                                                                |
+| `ENOTFOUND` / `querySrv`                                                          | The cluster hostname cannot be resolved.                                     | Check the hostname in `MONGODB_URI` and your internet connection.                                                                                                 |
+| `ECONNREFUSED`                                                                    | Nothing is listening on that address.                                        | Start local MongoDB, or check that the Atlas cluster is not paused.                                                                                               |
+| `socket disconnected before secure TLS connection was established` / `ECONNRESET` | A firewall, antivirus, VPN, or IPv6/NAT64 route is interrupting TLS.         | The server now forces IPv4, recycles idle sockets, and retries automatically. If it persists, disable TLS-inspecting antivirus/VPN or switch networks.            |
 
 No extra `.env` file is needed for MongoDB. Only `server/.env` is read by the backend, and `client/.env` is read by Vite. JWT secrets, OAuth, SMTP, and Cloudinary are optional for local development.
 
@@ -195,7 +209,7 @@ Admin accounts must never be created through public registration or OAuth. An in
 - **Admin Email**: `admin@foodlink.org`
 - **Password**: `Admin@123`
 
-*Note: If a non-admin user (donor, NGO, or volunteer) attempts to log in through `/admin/login`, the portal strictly denies access with an error message: "Access denied. This portal is restricted to authorized administrators."*
+_Note: If a non-admin user (donor, NGO, or volunteer) attempts to log in through `/admin/login`, the portal strictly denies access with an error message: "Access denied. This portal is restricted to authorized administrators."_
 
 ---
 
@@ -205,10 +219,10 @@ Volunteers earn **20 karma points** for every verified pickup + delivery. Those 
 
 ### Reward Tiers
 
-| Points | Reward | Fulfillment |
-| --- | --- | --- |
-| **50** | Free KCT visit with **Akhil C** | Experience request → admin approval → team schedules the visit |
-| **400** | **₹100 Amazon or Flipkart** coupon | Instant coupon code (`FOODLINK-AMZ-XXXXXX` / `FOODLINK-FLP-XXXXXX`) |
+| Points      | Reward                                                         | Fulfillment                                                               |
+| ----------- | -------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| **50**      | Free KCT visit with **Akhil C**                                | Experience request → admin approval → team schedules the visit            |
+| **400**     | **₹100 Amazon or Flipkart** coupon                             | Instant coupon code (`FOODLINK-AMZ-XXXXXX` / `FOODLINK-FLP-XXXXXX`)       |
 | **100,000** | Visit the **Chief Minister** — handshake & commemorative photo | Experience request → admin approval → team coordinates security clearance |
 
 ### How It Works
@@ -257,6 +271,7 @@ After seeding, edit rewards from the admin UI — re-running the seed resets the
 The application is fully functional using standard email and password authentication even when OAuth credentials are not yet supplied. When the Google OAuth button is clicked without configured credentials, the user receives an informative alert without crashing the platform.
 
 ### Google Cloud Console Setup
+
 1. Navigate to the [Google Cloud Console](https://console.cloud.google.com/).
 2. Create a new project named **FoodLink**.
 3. Go to **APIs & Services** > **OAuth consent screen**:
@@ -270,8 +285,8 @@ The application is fully functional using standard email and password authentica
    - Name: `FoodLink Web Client`.
    - **Authorized JavaScript origins**:
      - `http://localhost:5173`
-   - **Authorized redirect URIs**:
-     - `http://localhost:5000/api/auth/google/callback`
+   - **Authorized redirect URIs**: - `https://foodlink-platform.onrender.com
+/api/auth/google/callback`
 5. Copy your **Client ID** and **Client Secret** into `server/.env`.
 
 ---
@@ -279,6 +294,7 @@ The application is fully functional using standard email and password authentica
 ## 📡 API Reference Overview
 
 ### Authentication (`/api/auth`)
+
 - `POST /register/donor` - Register commercial or institutional donor
 - `POST /register/ngo` - Register NGO organization (pending verification)
 - `POST /register/volunteer` - Register volunteer profile
@@ -291,6 +307,7 @@ The application is fully functional using standard email and password authentica
 - `POST /logout` - Clear session cookie
 
 ### Admin Control Center (`/api/admin`)
+
 - `GET /dashboard` - Dashboard stats (users, NGOs, donors, mass rescued, meals saved, safety reports)
 - `GET /users` - List all registered users with role and status filters
 - `PATCH /users/:id/status` - Suspend or reactivate user accounts
@@ -319,12 +336,14 @@ The application is fully functional using standard email and password authentica
 - `PATCH /redemptions/:id/status` - Approve, fulfill, reject, or cancel a redemption (reject/cancel refunds points)
 
 ### Karma Rewards (`/api/rewards`)
+
 - `GET /catalog` - Active reward catalog plus the volunteer's current point balance
 - `GET /redemptions` - The authenticated volunteer's redemption history and coupon codes
 - `POST /redeem` - Redeem a reward (`rewardId`, optional `variant`, `contactPhone`, `note`)
 - `PATCH /redemptions/:id/cancel` - Cancel a pending experience request and refund points
 
 ### Password Recovery & Verification (`/api/auth`)
+
 - `POST /forgot-password` - Request password reset email (rate limited, enumeration-resistant)
 - `GET /verify-reset-token/:token` - Verify validity and expiration of 32-byte recovery token
 - `POST /reset-password` - Update password using validated token and strong password regex rules
@@ -334,6 +353,7 @@ The application is fully functional using standard email and password authentica
 ## 🔒 Git Security & Setup Instructions
 
 ### Initializing Git & Safe Commits
+
 The repository includes a comprehensive, multi-layered root `.gitignore` protecting sensitive credentials, environment variables, build outputs, and runtime uploads:
 
 ```bash
@@ -343,6 +363,7 @@ git status --ignored --short
 ```
 
 ### Git Security Invariants
+
 - **Never commit `.env` or `.env.*` files**: Real credentials (`MONGODB_URI`, `JWT_ACCESS_SECRET`, `GOOGLE_CLIENT_SECRET`, `SMTP_PASSWORD`) reside only in local uncommitted `.env` files.
 - **Example templates**: Keep `.env.example` updated with variable placeholders (without real values) for deployment documentation.
 - **Runtime artifacts**: `server/uploads/` and `server/logs/` are strictly ignored while preserving source assets and public images.
@@ -355,6 +376,7 @@ git status --ignored --short
 FoodLink features an email password recovery system with SHA-256 token hashing, 15-minute single-use link expiration, and timing-attack/account-enumeration resistance.
 
 ### 1. SMTP Credentials Setup (`server/.env`)
+
 Add your email provider credentials to `server/.env`:
 
 ```env
@@ -368,7 +390,9 @@ EMAIL_FROM="FoodLink Security" <noreply@foodlink.org>
 ```
 
 ### 2. Generating a Google/Gmail App Password
+
 If using Gmail as your SMTP server:
+
 1. Log in to your Google Account and navigate to **Security** (`https://myaccount.google.com/security`).
 2. Ensure **2-Step Verification** is turned ON.
 3. Search for **App passwords** in the search bar.
@@ -376,7 +400,9 @@ If using Gmail as your SMTP server:
 5. Copy the generated 16-character passcode and paste it into `SMTP_PASSWORD` in `server/.env` (without spaces).
 
 ### 3. Local Development Simulation Fallback
+
 If SMTP credentials are not yet configured or left blank:
+
 - The backend automatically detects the absence of `SMTP_USER`/`SMTP_PASSWORD`.
 - Instead of crashing, it logs the simulated email dispatch, recipient address, and direct password reset link directly to the server terminal:
   ```text
@@ -393,6 +419,7 @@ If SMTP credentials are not yet configured or left blank:
 ## 🧪 Testing
 
 Run the automated backend test suites:
+
 ```bash
 npm test
 ```
@@ -410,6 +437,7 @@ Time:        2.091 s
 ```
 
 Run the frontend production build verification:
+
 ```bash
 npm run build
 ```
@@ -425,4 +453,5 @@ dist/assets/index-AisyGW9f.js   1,704.17 kB │ gzip: 461.84 kB
 ---
 
 ## 📄 License
+
 This project is open-source under the **MIT License**.

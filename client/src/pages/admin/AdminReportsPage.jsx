@@ -8,7 +8,8 @@ export default function AdminReportsPage() {
   const handleDownload = (reportType, filename) => {
     setDownloading(reportType);
     try {
-      const apiBase = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
+      const apiBase = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'https://foodlink-platform.onrender.com
+/api');
       const url = `${apiBase}/admin/reports?type=${reportType}`;
       const token = localStorage.getItem('foodlink_token');
 
