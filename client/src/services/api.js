@@ -1,8 +1,7 @@
 import axios from 'axios';
 import { showError, showWarning } from '../utils/notification';
 
-const baseURL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'https://foodlink-platform.onrender.com
-/api');
+const baseURL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://foodlink-platform.onrender.com/api' : 'http://localhost:5000/api');
 
 const api = axios.create({
   baseURL,

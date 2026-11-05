@@ -41,8 +41,7 @@ const verifyOAuthState = (stateToken, expectedProvider) => {
  */
 const getGoogleAuthUrl = (state) => {
   const clientId = process.env.GOOGLE_CLIENT_ID;
-  const redirectUri = process.env.GOOGLE_CALLBACK_URL || 'https://foodlink-platform.onrender.com
-/api/auth/google/callback';
+  const redirectUri = process.env.GOOGLE_CALLBACK_URL || 'https://foodlink-platform.onrender.com/api/auth/google/callback';
 
   if (!clientId || clientId === 'your-google-client-id') {
     return null;
@@ -70,8 +69,7 @@ const getGoogleAuthUrl = (state) => {
 const exchangeGoogleCode = async (code) => {
   const clientId = process.env.GOOGLE_CLIENT_ID;
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-  const redirectUri = process.env.GOOGLE_CALLBACK_URL || 'https://foodlink-platform.onrender.com
-/api/auth/google/callback';
+  const redirectUri = process.env.GOOGLE_CALLBACK_URL || 'https://foodlink-platform.onrender.com/api/auth/google/callback';
 
   if (!clientId || !clientSecret) {
     throw new Error('Google OAuth credentials not configured on the server');

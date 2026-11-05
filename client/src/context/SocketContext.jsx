@@ -20,8 +20,7 @@ export const SocketProvider = ({ children }) => {
       return;
     }
 
-    const socketUrl = import.meta.env.VITE_SOCKET_URL || (import.meta.env.PROD ? '/' : 'https://foodlink-platform.onrender.com
-');
+    const socketUrl = import.meta.env.VITE_SOCKET_URL || (import.meta.env.PROD ? '/' : 'https://foodlink-platform.onrender.com');
     const socketInstance = io(socketUrl, {
       auth: { token },
       transports: ['websocket', 'polling'],
